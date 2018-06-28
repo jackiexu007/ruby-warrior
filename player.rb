@@ -1,16 +1,16 @@
 class Player
   def play_turn(warrior)
         @health = 20 if @health.nil?
-        if warrior_need_rest?(warrior)
+        if warrior.feel(:forward).wall?
+		warrior.pivot!
+	elsif warrior_need_rest?(warrior)
 		if warrior_able_to_rest?(warrior)
 			warrior.rest!
 		else
 			warrior.walk!(:backward)
 		end
         else
-		if warrior.feel(:backward).captive?
-			warrior.rescue!(:backward)
-		elsif warrior.feel.empty?
+		if warrior.feel.empty?
                 	warrior.walk!
 		else
 			warrior.attack!
